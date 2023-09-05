@@ -1,0 +1,27 @@
+HELP.md
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+*/target/
+*/.idea/
+*/node_modules
+*/.DS_store
+*.iws
+*.iml
+*.ipr
+.idea/
+
+**/target/
+**/.idea/
+**/node_modules/
+**/.DS_Store
+**/*.iml
+
