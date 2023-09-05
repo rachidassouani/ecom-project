@@ -1,4 +1,4 @@
-package ma.enset.pfe_ecommerce.entites;
+package ma.enset.pfe_ecommerce.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Commentaires {
+public class Comment {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String msg;
-    private int rank;
+    private String commentMsg;
+
     @ManyToOne
-    private Utilisateurs utilisateurs;
+    private User user;
+
     @ManyToOne
-    private Produit produit;
+    private Product product;
 }

@@ -1,20 +1,20 @@
-package ma.enset.pfe_ecommerce.entites;
+package ma.enset.pfe_ecommerce.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
-import java.io.Serializable;
 import java.util.List;
+
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Categorie implements Serializable {
+public class Role {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
+    private String roleName;
     private String description;
-    @OneToMany(mappedBy = "categorie")
-    private List<Produit> listproduits;
+
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users;
 }

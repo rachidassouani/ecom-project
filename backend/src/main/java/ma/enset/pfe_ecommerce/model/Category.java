@@ -1,4 +1,4 @@
-package ma.enset.pfe_ecommerce.entites;
+package ma.enset.pfe_ecommerce.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,11 +9,12 @@ import java.util.List;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor
-public class Roles {
+public class Category{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
+    private String name;
     private String description;
-    @OneToMany(mappedBy = "roles")
-    private List<Utilisateurs> listutilisateur;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }

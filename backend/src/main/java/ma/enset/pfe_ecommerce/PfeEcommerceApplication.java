@@ -1,16 +1,15 @@
 package ma.enset.pfe_ecommerce;
 
-import ma.enset.pfe_ecommerce.entites.Categorie;
-import ma.enset.pfe_ecommerce.entites.Produit;
-import ma.enset.pfe_ecommerce.repositories.CategorieRepository;
-import ma.enset.pfe_ecommerce.repositories.ProduitRepository;
-import org.modelmapper.ModelMapper;
+import ma.enset.pfe_ecommerce.mappers.CategoryMapperImpl;
+import ma.enset.pfe_ecommerce.model.Category;
+import ma.enset.pfe_ecommerce.model.Product;
+import ma.enset.pfe_ecommerce.repositories.CategoryRepository;
+import ma.enset.pfe_ecommerce.repositories.ProductRepository;
 import org.modelmapper.internal.bytebuddy.utility.RandomString;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Random;
 
@@ -22,32 +21,28 @@ public class PfeEcommerceApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(ProduitRepository produitRepository,
-                                        CategorieRepository categorieRepository) {
+    CommandLineRunner commandLineRunner(ProductRepository productRepository,
+                                        CategoryRepository categoryRepository) {
         return args -> {
 
-            categorieRepository.save(new Categorie(null,"Cat1","categorie1",null ));
-            categorieRepository.save(new Categorie(null,"Cat2","categorie2",null ));
-            categorieRepository.save(new Categorie(null,"Cat3","categorie3",null ));
-            Random rd=new Random();
-            categorieRepository.findAll().forEach(c -> {
-                for (int i = 0; i <10 ; i++) {
-                    Produit p=new Produit();
-                    p.setNom(RandomString.make(18));
-                    p.setPrix(100+rd.nextDouble(100));
-                    p.setDisponible(rd.nextBoolean());
-                    p.setPromotion(rd.nextBoolean());
-                    p.setSelection(rd.nextBoolean());
+            categoryRepository.save(new Category(null,"Laptops","Laptops",null));
+            categoryRepository.save(new Category(null,"Phones","Phones",null));
+            categoryRepository.save(new Category(null,"Watches","Watches",null));
+
+            Random rd = new Random();
+            categoryRepository.findAll().forEach(c -> {
+                for (int i = 0; i < 10 ; i++) {
+                    Product p = new Product();
+                    p.setName(RandomString.make(18));
+                    p.setPrice(100+rd.nextDouble(100));
+                    p.setDescription(RandomString.make(20));
+                    p.setAvailable(rd.nextBoolean());
                     p.setPhoto("inconu.png");
-                    p.setCategorie(c);
-                    produitRepository.save(p);
+                    p.setCategory(c);
+                    productRepository.save(p);
                 }
 
             });
-
-
-
-
         };
     }
 }
