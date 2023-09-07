@@ -1,0 +1,85 @@
+<p-sidebar 
+        [(visible)]="sidebarVisible" 
+        [position]="'right'"
+        [transitionOptions]="'300ms cubic-bezier(0, 0, 0.2, 1)'"
+        styleClass="w-30rem">
+    
+        <!-- <app-manage-customer 
+                (submit)="save($event)"
+                [customer]="customer"
+                [operation]="operation"
+                (cancel)="cancel()"
+                >
+        </app-manage-customer> -->
+</p-sidebar>
+
+<div class="flex align-items-stretch" style="height: 99vh;">
+    <div class="flex flex-column align-items-stretch border-right-1 col-2 border-gray-200">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="flex flex-column flex-grow-1">
+        <div>
+          <app-header></app-header>  
+        </div>
+        <div class="main-container p-3">
+            <button 
+                pButton 
+                icon="pi pi-plus" 
+                label="Create New Product" 
+                class="p-button-success" (click)="onCreateProduct()"></button>
+            
+            <div class="flex justify-content-center align-items-center flex-wrap gap-5 mt-4">
+                <div  *ngFor="let product of allProducts">
+                    <div>
+                        <p-card [style]="{width: '316px'}" styleClass="p-card-shadow text-center">
+                            <ng-template pTemplate="header">
+                                <div>
+                                    <img 
+                                        src="https://picsum.photos/200"
+                                        class="border-round-top cover"
+                                        height="260px"
+                                        alt="Card"/>
+                                </div>
+                            </ng-template>
+                        
+                            <ng-template pTemplate="content">
+                                <p-badge value={{product.price}} DH></p-badge>
+                                <p class="text-gray-600">{{product.name}} </p>
+                                <p class="text-gray-600">{{product.description}}</p>
+                            </ng-template>
+                        
+                            <ng-template pTemplate="footer">
+                                <button
+                                    (click)="onUpdateProduct()"
+                                    pButton 
+                                    label="Update" 
+                                    class="p-button-secondary p-button-outlined p-button-rounded">
+                                </button>
+                        
+                                <button
+                                    (click)="onDeleteProduct()"
+                                    pButton 
+                                    label="Delete" 
+                                    class="p-button-danger p-button-outlined p-button-rounded ml-2">
+                                </button>
+                        
+                            </ng-template>
+                        </p-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- toast after saving new customer -->
+<p-toast position="bottom-center"></p-toast>
+
+<!-- confirmation dialog before deleting a customer -->
+<p-confirmDialog 
+    header="Confirmation" 
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Delete"
+    acceptButtonStyleClass="p-button-danger"
+    rejectLabel="Cancel">
+</p-confirmDialog>
