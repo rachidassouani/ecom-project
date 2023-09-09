@@ -2,11 +2,16 @@ package ma.enset.pfe_ecommerce.web;
 
 import lombok.AllArgsConstructor;
 import ma.enset.pfe_ecommerce.dtos.ProductDTO;
+import ma.enset.pfe_ecommerce.dtos.ProductRequest;
+import ma.enset.pfe_ecommerce.dtos.ProductResponse;
+import ma.enset.pfe_ecommerce.exceptions.CategoryNotFoundException;
 import ma.enset.pfe_ecommerce.exceptions.ProductNotFoundException;
+import ma.enset.pfe_ecommerce.model.Product;
 import ma.enset.pfe_ecommerce.repositories.ProductRepository;
 import ma.enset.pfe_ecommerce.services.ProductService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,8 +35,9 @@ public class ProductRestController {
     }
 
     @PostMapping
-    public ProductDTO saveProduct(@RequestBody ProductDTO productDTO) {
-        return productService.saveProduct(productDTO);
+    public ResponseEntity<?> saveProduct(@RequestBody ProductRequest productRequest) throws CategoryNotFoundException {
+        ProductResponse savedProduct = productService.saveProduct(productRequest);
+        return ResponseEntity.ok(savedProduct);
     }
 
     @PutMapping("{id}")

@@ -25,13 +25,13 @@ public class PfeEcommerceApplication {
                                         CategoryRepository categoryRepository) {
         return args -> {
 
-            categoryRepository.save(new Category(null,"Laptops","Laptops",null));
-            categoryRepository.save(new Category(null,"Phones","Phones",null));
-            categoryRepository.save(new Category(null,"Watches","Watches",null));
+            //categoryRepository.save(new Category(null,"Laptops","Laptops"));
+            //categoryRepository.save(new Category(null,"Phones","Phones"));
+            //categoryRepository.save(new Category(null,"Watches","Watches"));
 
             Random rd = new Random();
             categoryRepository.findAll().forEach(c -> {
-                for (int i = 0; i < 10 ; i++) {
+                for (int i = 0; i < 1 ; i++) {
                     Product p = new Product();
                     p.setName(RandomString.make(18));
                     p.setPrice(100+rd.nextDouble(100));

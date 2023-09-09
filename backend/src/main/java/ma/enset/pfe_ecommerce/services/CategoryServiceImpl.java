@@ -30,6 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findCategoryById(Long idCategory) throws CategoryNotFoundException {
+        return categoryRepository.findById(idCategory)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+    }
+
+    @Override
     public List<CategoryDTO> findAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryDTO> categoryDTOS = categories.stream()
@@ -47,8 +53,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
+        System.out.println("good1");
         Category category = categoryMapperImpl.fromCategoryDTO(categoryDTO);
+        System.out.println("good2");
         Category savedCategory = categoryRepository.save(category);
+        System.out.println("good3");
         return categoryMapperImpl.fromCategory(savedCategory);
     }
 

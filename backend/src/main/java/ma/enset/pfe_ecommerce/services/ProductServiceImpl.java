@@ -1,10 +1,15 @@
 package ma.enset.pfe_ecommerce.services;
 
 import ma.enset.pfe_ecommerce.dtos.ProductDTO;
+import ma.enset.pfe_ecommerce.dtos.ProductRequest;
+import ma.enset.pfe_ecommerce.dtos.ProductResponse;
+import ma.enset.pfe_ecommerce.exceptions.CategoryNotFoundException;
+import ma.enset.pfe_ecommerce.model.Category;
 import ma.enset.pfe_ecommerce.model.Product;
 import ma.enset.pfe_ecommerce.exceptions.ProductNotFoundException;
 import ma.enset.pfe_ecommerce.mappers.ProductMapperImp;
 import ma.enset.pfe_ecommerce.repositories.ProductRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +23,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
+    private CategoryService categoryService;
     private final ProductMapperImp productMapperImp;
 
 
-    public ProductServiceImpl(ProductRepository productRepository, ProductMapperImp productMapperImp) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, ProductMapperImp productMapperImp) {
         this.productRepository = productRepository;
+        this.categoryService = categoryService;
         this.productMapperImp = productMapperImp;
     }
 
@@ -43,10 +50,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO saveProduct(ProductDTO productDTO){
-        Product product = productMapperImp.fromProductDTO(productDTO);
-        Product savedProduct = productRepository.save(product);
-        return productMapperImp.fromProduct(savedProduct);
+    public ProductResponse saveProduct(ProductRequest productRequest) throws CategoryNotFoundException {
+        Product productToSave = productMapperImp.fromProductRequest(productRequest);
+        Category category = categoryService.findCategoryById(productRequest.getCategoryId());
+        if (category != null) {
+            productToSave.setCategory(category);
+        }
+        Product savedProduct = productRepository.save(productToSave);
+
+        return productMapperImp.fromProductToProductResponse(savedProduct);
     }
 
     @Override

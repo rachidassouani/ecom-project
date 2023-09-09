@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/v1/categories")
+@CrossOrigin("*")
 public class CategoryRestController {
 
     private CategoryService categoryService;
@@ -31,9 +32,9 @@ public class CategoryRestController {
     }
 
     @PutMapping("{id}")
-    public CategoryDTO updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categorieDTO) {
-        categorieDTO.setId(id);
-        return categoryService.updateCategory(categorieDTO);
+    public CategoryDTO updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+        categoryDTO.setId(id);
+        return categoryService.updateCategory(categoryDTO);
     }
 
     @DeleteMapping("{id}")
