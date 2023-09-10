@@ -8,8 +8,11 @@
 </div>
 
 <div>
-    <div
-        *ngFor="let item of sideBarItems">
-        <p>{{item.label}}</p>
+    <!-- <div
+        *ngFor="let item of sideBarItems" (click)="onSideBarClicked(item)">
+        <p><i [class]="item.icon"></i> {{item.label}}</p>
+    </div> -->
+    <div>
+        <p-menu [model]="sideBarItems"></p-menu>
     </div>
 </div>

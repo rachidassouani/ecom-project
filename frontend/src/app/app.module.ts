@@ -15,6 +15,9 @@ import { BadgeModule } from 'primeng/badge';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +26,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CategoriesComponent } from './components/categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { RegisterComponent } from './components/register/register.component';
     ProductsComponent,
     LoginComponent,
     SidebarComponent,
-    RegisterComponent
+    RegisterComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +54,10 @@ import { RegisterComponent } from './components/register/register.component';
     CardModule,
     BadgeModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    RadioButtonModule,
+    DropdownModule,
+    TableModule
   ],
   providers: [
     MessageService,

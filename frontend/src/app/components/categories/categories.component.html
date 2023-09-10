@@ -1,0 +1,97 @@
+<p-sidebar 
+        [(visible)]="sidebarVisible" 
+        [position]="'right'"
+        [transitionOptions]="'300ms cubic-bezier(0, 0, 0.2, 1)'"
+        styleClass="w-30rem">
+    
+        <div>
+            <h2>{{operation === 'create' ? 'Create Category' : 'Update Category'}}</h2>
+            <div class="field">
+                <label for="name">Name</label>
+                <input 
+                    [(ngModel)]="category.name"
+                    id="name" 
+                    pInputText 
+                    placeholder="Category name" 
+                    type="text" 
+                    class="w-full">
+            </div>
+        
+            <div class="field">
+                <label for="description">Description</label>
+                <input 
+                    [(ngModel)]="category.description"
+                    id="description" 
+                    pInputText 
+                    placeholder="Category description" 
+                    type="text" 
+                    class="w-full">
+            </div>
+        
+            <button [disabled]="!isCategoryValid()"
+                    (click)="onSaveCategory(category)"
+                    pButton
+                    label="Submit"
+                    class="w-full"></button>
+            
+            <button (click)="onCancel()"
+                    pButton 
+                    label="Cancel" 
+                    class="w-full p-button-outlined p-button-danger mt-2"></button>
+        
+                
+        </div>
+</p-sidebar>
+
+
+
+<div class="flex align-items-stretch" style="height: 99vh;">
+    <div class="flex flex-column align-items-stretch border-right-1 col-2 border-gray-200">
+        <app-sidebar></app-sidebar>
+    </div>
+    <div class="flex flex-column flex-grow-1">
+        <div>
+          <app-header></app-header>  
+        </div>
+        <div class="main-container p-3">
+            <button 
+                pButton 
+                icon="pi pi-plus" 
+                label="Create New Category" 
+                class="p-button-success" (click)="onCreateCategory()"></button>
+
+            <div class="mt-4">
+                <p-table class="mt-2" [value]="allCategories" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Operations</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-category>
+                        <tr>
+                            <td>{{ category.id }}</td>
+                            <td>{{ category.name }}</td>
+                            <td>{{ category.description }}</td>
+                            <td (click)="onDeleteCategory(category)"><i class="pi pi-times" style="font-size: 1.5rem; color: red; cursor: pointer;"></i></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- toast after saving new customer -->
+<p-toast position="bottom-center"></p-toast>
+
+<!-- confirmation dialog before deleting a customer -->
+<p-confirmDialog 
+    header="Confirmation" 
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Delete"
+    acceptButtonStyleClass="p-button-danger"
+    rejectLabel="Cancel">
+</p-confirmDialog>

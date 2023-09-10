@@ -10,5 +10,5 @@ public class ProductResponse {
     private double price;
     private boolean isAvailable;
     private String photo;
-    private CategoryDTO categoryDTO;
+    private CategoryResponse categoryDTO;
 }

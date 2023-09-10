@@ -1,6 +1,7 @@
 package ma.enset.pfe_ecommerce.services;
 
-import ma.enset.pfe_ecommerce.dtos.CategoryDTO;
+import ma.enset.pfe_ecommerce.dtos.CategoryRequest;
+import ma.enset.pfe_ecommerce.dtos.CategoryResponse;
 import ma.enset.pfe_ecommerce.model.Category;
 import ma.enset.pfe_ecommerce.exceptions.CategoryNotFoundException;
 import ma.enset.pfe_ecommerce.mappers.CategoryMapperImpl;
@@ -23,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDTO findCategory(Long idCategory) throws CategoryNotFoundException {
+    public CategoryResponse findCategory(Long idCategory) throws CategoryNotFoundException {
         Category Category = categoryRepository.findById(idCategory)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
         return categoryMapperImpl.fromCategory(Category);
@@ -36,28 +37,25 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryDTO> findAllCategories() {
+    public List<CategoryResponse> findAllCategories() {
         List<Category> categories = categoryRepository.findAll();
-        List<CategoryDTO> categoryDTOS = categories.stream()
+        List<CategoryResponse> categoryDTOS = categories.stream()
                 .map(category -> categoryMapperImpl.fromCategory(category))
                 .collect(Collectors.toList());
         return categoryDTOS;
     }
 
     @Override
-    public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
-        Category category = categoryMapperImpl.fromCategoryDTO(categoryDTO);
+    public CategoryResponse saveCategory(CategoryRequest categoryRequest) {
+        Category category = categoryMapperImpl.fromCategoryRequest(categoryRequest);
         Category savedCategory = categoryRepository.save(category);
         return categoryMapperImpl.fromCategory(savedCategory);
     }
 
     @Override
-    public CategoryDTO updateCategory(CategoryDTO categoryDTO) {
-        System.out.println("good1");
-        Category category = categoryMapperImpl.fromCategoryDTO(categoryDTO);
-        System.out.println("good2");
+    public CategoryResponse updateCategory(CategoryRequest categoryRequest) {
+        Category category = categoryMapperImpl.fromCategoryRequest(categoryRequest);
         Category savedCategory = categoryRepository.save(category);
-        System.out.println("good3");
         return categoryMapperImpl.fromCategory(savedCategory);
     }
 

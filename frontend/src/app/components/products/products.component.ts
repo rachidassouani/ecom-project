@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CategoryDTO } from 'src/app/models/category-dto';
 import { ProductDTO } from 'src/app/models/product-dto';
+import { ProductRequest } from 'src/app/models/product-request';
+import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,14 +15,16 @@ export class ProductsComponent {
 
   sidebarVisible = false
   allProducts: ProductDTO[] = []
-  customer = {};
-
+  product: ProductRequest = {};
+  categories: CategoryDTO[] = []
+  selectedCategory!: CategoryDTO;
   operation: 'create' | 'update' = 'create';
 
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private productService: ProductService) {}
+    private productService: ProductService,
+    private categoryService: CategoryService) {}
 
   ngOnInit() {
     this.findAllProducts();
@@ -34,17 +39,43 @@ export class ProductsComponent {
     });
   }
 
-  save() {
-    
-  }
+  
+  onSaveProduct(productRequest: ProductRequest) {
+    if (productRequest) {
+      if (this.operation === 'create') {
+        productRequest.categoryId = this.selectedCategory.id;
+        this.productService.saveProduct(productRequest)
+        .subscribe({
+          next: () => {
 
-  deleteCustomer(productDTO: ProductDTO) {
+            // fetch the list of products in order to display our new saved product
+            this.findAllProducts();
+            
+            // to close sidebar from
+            this.sidebarVisible = false
+
+            // clear the product form
+            this.product = {}
+
+            // display success notification to the user
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Product saved',
+              detail: 'Product saved successfully'
+            })
+          }, error: () => {
+
+          }
+        })
+      }}
+    }
+  onDeleteProduct(productToDelete: ProductDTO | undefined) {
     this.confirmationService.confirm({
       header: 'Delete Product',
-      message: `Are you sure you want to delete ${productDTO.name}, Please note this operation cannot be undone`,
+      message: `Are you sure you want to delete ${productToDelete?.name}, Please note this operation cannot be undone`,
       accept: () => {
-        if(productDTO.id !== null && productDTO.id !== undefined) {
-          this.productService.deleteProduct(productDTO.id).subscribe({
+        if(productToDelete?.id !== null && productToDelete?.id !== undefined) {
+          this.productService.deleteProduct(productToDelete.id).subscribe({
             
             next: () => {
               this.findAllProducts();
@@ -65,31 +96,39 @@ export class ProductsComponent {
     });    
   }
 
-
-  // updateCustomer(customerToUpdate: CustomerDTO) {
-  //   this.operation = 'update';
-  //   this.sidebarVisible = true;
-  //   this.customer = customerToUpdate;
-  // }
-
   onCreateProduct() {
+    this.findAllCategories()
     this.operation = 'create';
-    this.customer = {};
+    this.product = {};
     this.sidebarVisible = true;
   }
 
   // cancel event received
-  cancel() {
+  onCancel() {
     this.operation = 'create';
-    this.customer = {};
+    this.product = {};
     this.sidebarVisible = false;
   }
 
-  onUpdateProduct() {
-
+  isProductValid(): boolean {
+    return this.isInputValid(this.product.name)
+      && this.isInputValid(this.product.description)
+      && this.product.price != undefined && this.product.price > 0
   }
 
-  onDeleteProduct() {
-    
+  private isInputValid(input: string | undefined): boolean {
+    return input !== null && input !== undefined && input.length > 0
+  }
+  
+
+  private findAllCategories(){
+    this.categoryService.findAllCategories().subscribe({
+      next: (resData) => {
+        this.categories = resData;
+      }
+      ,error: (error) => {
+        console.log(error);
+      }
+    })
   }
 }

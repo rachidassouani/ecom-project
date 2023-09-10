@@ -1,6 +1,7 @@
 package ma.enset.pfe_ecommerce.mappers;
 
-import ma.enset.pfe_ecommerce.dtos.CategoryDTO;
+import ma.enset.pfe_ecommerce.dtos.CategoryRequest;
+import ma.enset.pfe_ecommerce.dtos.CategoryResponse;
 import ma.enset.pfe_ecommerce.model.Category;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -8,15 +9,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryMapperImpl {
 
-    public CategoryDTO fromCategory(Category category){
-        CategoryDTO categoryDTO = new CategoryDTO();
+    public CategoryResponse fromCategory(Category category){
+        CategoryResponse categoryDTO = new CategoryResponse();
         BeanUtils.copyProperties(category, categoryDTO);
         return categoryDTO;
     }
 
-    public Category fromCategoryDTO(CategoryDTO categorieDTO){
+    public Category fromCategoryRequest(CategoryRequest categoryRequest){
         Category category = new Category();
-        BeanUtils.copyProperties(categorieDTO, category);
+        BeanUtils.copyProperties(categoryRequest, category);
         return category;
     }
 }

@@ -1,7 +1,8 @@
 package ma.enset.pfe_ecommerce.web;
 
 import lombok.AllArgsConstructor;
-import ma.enset.pfe_ecommerce.dtos.CategoryDTO;
+import ma.enset.pfe_ecommerce.dtos.CategoryResponse;
+import ma.enset.pfe_ecommerce.dtos.CategoryRequest;
 import ma.enset.pfe_ecommerce.exceptions.CategoryNotFoundException;
 import ma.enset.pfe_ecommerce.services.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -17,24 +18,24 @@ public class CategoryRestController {
     private CategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDTO> categories(){
+    public List<CategoryResponse> categories(){
         return categoryService.findAllCategories();
     }
 
     @GetMapping("{id}")
-    public CategoryDTO findCategory(@PathVariable Long id) throws CategoryNotFoundException {
+    public CategoryResponse findCategory(@PathVariable Long id) throws CategoryNotFoundException {
         return categoryService.findCategory(id);
     }
 
     @PostMapping
-    public CategoryDTO saveCategory(@RequestBody CategoryDTO categorieDTO) {
-        return categoryService.saveCategory(categorieDTO);
+    public CategoryResponse saveCategory(@RequestBody CategoryRequest categoryRequest) {
+        return categoryService.saveCategory(categoryRequest);
     }
 
     @PutMapping("{id}")
-    public CategoryDTO updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
-        categoryDTO.setId(id);
-        return categoryService.updateCategory(categoryDTO);
+    public CategoryResponse updateCategory(@PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
+        categoryRequest.setId(id);
+        return categoryService.updateCategory(categoryRequest);
     }
 
     @DeleteMapping("{id}")
