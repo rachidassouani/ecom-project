@@ -29,6 +29,11 @@ public class ProductRestController {
         return productService.findAllProducts();
     }
 
+    @GetMapping("categories/{categoryId}")
+    public List<ProductDTO> findAllProductsByCategoryId(@PathVariable Long categoryId){
+        return productService.findAllProductsByCategoryId(categoryId);
+    }
+
     @GetMapping("{id}")
     public ProductDTO findProduct(@PathVariable Long id) throws ProductNotFoundException {
         return productService.findProductById(id);

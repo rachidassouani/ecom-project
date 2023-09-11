@@ -19,6 +19,7 @@ export class ProductsComponent {
   categories: CategoryDTO[] = []
   selectedCategory!: CategoryDTO;
   operation: 'create' | 'update' = 'create';
+  categoryId!: number;
 
   constructor(
     private messageService: MessageService,
@@ -26,7 +27,7 @@ export class ProductsComponent {
     private productService: ProductService,
     private categoryService: CategoryService) {}
 
-  ngOnInit() {
+  ngOnInit() {    
     this.findAllProducts();
   }
 
@@ -130,5 +131,20 @@ export class ProductsComponent {
         console.log(error);
       }
     })
+  }
+  
+  handleSelectedCategoryId(categoryId: any) {
+    this.categoryId =categoryId;
+    this.productService.findAllProductsByCategoryId(categoryId).subscribe({
+      next: (resData) => {
+        this.allProducts = resData;
+      }, error: (error) => {
+        console.log(error);
+      }
+    })
+  }
+
+  handleLoadAllProducts() {
+    this.findAllProducts();
   }
 }

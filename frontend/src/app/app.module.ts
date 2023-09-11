@@ -18,6 +18,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { ListboxModule } from 'primeng/listbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -57,7 +58,8 @@ import { CategoriesComponent } from './components/categories/categories.componen
     ConfirmDialogModule,
     RadioButtonModule,
     DropdownModule,
-    TableModule
+    TableModule,
+    ListboxModule,
   ],
   providers: [
     MessageService,

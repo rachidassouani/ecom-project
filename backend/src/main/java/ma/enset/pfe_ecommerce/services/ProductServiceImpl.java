@@ -9,7 +9,6 @@ import ma.enset.pfe_ecommerce.model.Product;
 import ma.enset.pfe_ecommerce.exceptions.ProductNotFoundException;
 import ma.enset.pfe_ecommerce.mappers.ProductMapperImp;
 import ma.enset.pfe_ecommerce.repositories.ProductRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,5 +96,14 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> productMapperImp.fromProduct(product))
                 .collect(Collectors.toList());
         return productDTOS;
+    }
+
+    @Override
+    public List<ProductDTO> findAllProductsByCategoryId(Long categoryId) {
+        List<Product> productsByCategoryId = productRepository.findAllByCategoryId(categoryId);
+
+        return productsByCategoryId.stream()
+                .map(product -> productMapperImp.fromProduct(product))
+                .collect(Collectors.toList());
     }
 }

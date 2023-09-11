@@ -14,10 +14,15 @@ export class ProductService {
   constructor(private httpClient: HttpClient) { }
 
   private readonly productsUrl = `${environment.api.baseUrl}/${environment.api.productUrl}`;
+  private readonly productsByCategoryIdUrl = `${environment.api.baseUrl}/${environment.api.productsByCategoryUrl}`;
 
 
   findAllProducts(): Observable<ProductDTO[]> {
     return this.httpClient.get<ProductDTO[]>(this.productsUrl);
+  }
+
+  findAllProductsByCategoryId(categoryId: number): Observable<ProductDTO[]> {
+    return this.httpClient.get<ProductDTO[]>(`${this.productsByCategoryIdUrl}/${categoryId}`);
   }
 
   deleteProduct(productId: number | undefined): Observable<void> {
@@ -27,5 +32,4 @@ export class ProductService {
   saveProduct(productRequest: ProductRequest): Observable<ProductResponse> {
     return this.httpClient.post<ProductResponse>(this.productsUrl, productRequest);
   }
-
 }

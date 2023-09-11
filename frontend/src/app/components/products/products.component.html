@@ -56,10 +56,6 @@
                 <label for="category">Category</label>
                 <p-dropdown [options]="categories" [(ngModel)]="selectedCategory" optionLabel="name"></p-dropdown>
             </div>
-
-            
-
-
         
             <button [disabled]="!isProductValid()"
                     (click)="onSaveProduct(product)"
@@ -76,7 +72,11 @@
 
 <div class="flex align-items-stretch" style="height: 99vh;">
     <div class="flex flex-column align-items-stretch border-right-1 col-2 border-gray-200">
-        <app-sidebar></app-sidebar>
+        <app-sidebar 
+            (categoryId)="handleSelectedCategoryId($event)"
+            (loadAllProducts)="handleLoadAllProducts()"
+            >
+        </app-sidebar>
     </div>
     <div class="flex flex-column flex-grow-1">
         <div>

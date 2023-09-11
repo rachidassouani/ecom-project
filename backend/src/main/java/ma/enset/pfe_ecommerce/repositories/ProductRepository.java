@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     //List<Product> findBySelectionIsTrue();
     List<Product> findByNameContains(String mc);
+    List<Product> findAllByCategoryId(Long categoryId);
 }

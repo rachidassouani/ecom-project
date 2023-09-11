@@ -19,4 +19,5 @@ public interface ProductService {
    void deleteProduct(Long id);
    byte[] getPhoto(Long id) throws Exception;
    List<ProductDTO> searchByName(String mc);
+   List<ProductDTO> findAllProductsByCategoryId(Long categoryId);
 }

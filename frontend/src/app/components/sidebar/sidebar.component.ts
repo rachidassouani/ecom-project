@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { CategoryDTO } from 'src/app/models/category-dto';
+import { ProductDTO } from 'src/app/models/product-dto';
+import { CategoryService } from 'src/app/services/category.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,13 +13,22 @@ import { MenuItem } from 'primeng/api';
 })
 export class SidebarComponent {
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+    private categoryService: CategoryService,
+    private productService: ProductService) {}
 
-  }
-
-  //Array<MenuItem> 
   sideBarItems!: MenuItem[];
+  allCategories: CategoryDTO[] = [];
+  
+  @Output() 
+  categoryId: EventEmitter<number> = new EventEmitter();
 
+  @Output()
+  loadAllProducts: EventEmitter<void> = new EventEmitter();
+  
+  selectedCategoryId!: number;
+  
+  allProductsByCategoryId: ProductDTO[] = [];
 
   ngOnInit() {
     this.sideBarItems = [
@@ -30,7 +43,8 @@ export class SidebarComponent {
       { label: 'Products', 
         icon: 'pi pi-users',
         command: () => {
-          this.router.navigate(['products'])
+          this.loadAllProducts.emit();
+          this.router.navigate(['products']);
         }},  
       
         { label: 'Categories',
@@ -39,11 +53,42 @@ export class SidebarComponent {
             this.router.navigate(['categories'])
         }}
     ];
+    this.findAllCategories();
+    
+    
   }
 
   onSideBarClicked() {
     this.router.navigate(['categories']);
   }
+
+  findAllCategories() {
+    this.categoryService.findAllCategories().subscribe({
+      next: (resData) => {
+        this.allCategories = resData;
+      }, error: (error) => {
+        console.log(error);
+      }
+    });
+  }
+
+  onCategorySelect(event: any) {
+    this.selectedCategoryId = event
+    this.categoryId.emit(this.selectedCategoryId);
+  }
+
+  
+
+  findProductsByCategory(categoryId: number) {
+    this.productService.findAllProductsByCategoryId(categoryId).subscribe({
+      next: (resData) => {
+        this.allProductsByCategoryId = resData;
+      }, error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
 }
 
 

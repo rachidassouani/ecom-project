@@ -8,11 +8,26 @@
 </div>
 
 <div>
-    <!-- <div
-        *ngFor="let item of sideBarItems" (click)="onSideBarClicked(item)">
-        <p><i [class]="item.icon"></i> {{item.label}}</p>
-    </div> -->
     <div>
         <p-menu [model]="sideBarItems"></p-menu>
     </div>
+    <div>
+        
+        <!-- <div *ngFor="let category of allCategories">
+            {{category.name}}
+        </div> -->
+        
+        <div>
+            <h4>List of categories</h4>
+            <p-listbox 
+                (ngModelChange)="onCategorySelect($event)" 
+                [options]="allCategories" 
+                [(ngModel)]="selectedCategoryId" 
+                optionLabel="name" 
+                optionValue="id" 
+                [style]="{'width':'15rem'}">
+            </p-listbox>
+        </div>
+    </div>
+    
 </div>
