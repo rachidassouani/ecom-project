@@ -29,6 +29,7 @@ public class PfeEcommerceApplication {
             //categoryRepository.save(new Category(null,"Phones","Phones"));
             //categoryRepository.save(new Category(null,"Watches","Watches"));
 
+
             Random rd = new Random();
             categoryRepository.findAll().forEach(c -> {
                 for (int i = 0; i < 1 ; i++) {
