@@ -28,21 +28,12 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse login(AuthenticationRequest request) {
-        System.out.println("okk");
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 
         // get the user from the authenticate object
         User user = (User) authenticate.getPrincipal();
 
-        System.out.println(user.getFirstName());
-        System.out.println(user.getLastName());
-        System.out.println("roles" + user.getRoles().size());
-        if (user.getRoles() != null) {
-            user.getRoles().forEach(role -> System.out.println("rooles " + role.getRoleName()));
-        } else  {
-            System.out.println("Null");
-        }
         // cast the user to customerDTO
         UserDTO userDTO = userMapper.fromUser(user);
 
