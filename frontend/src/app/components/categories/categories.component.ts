@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CategoryDTO } from 'src/app/models/category-dto';
 import { CategoryRequest } from 'src/app/models/category-request';
-import { CategoryService } from 'src/app/services/category.service';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-categories',
@@ -13,6 +14,7 @@ export class CategoriesComponent {
 
   constructor(private categoryService: CategoryService,
     private confirmationService: ConfirmationService,
+    private userService: UserService,
     private messageService: MessageService) {}
 
   allCategories: CategoryDTO[] = []
@@ -112,4 +114,11 @@ export class CategoriesComponent {
         })
       }}
     }
+
+  isUserAdmin() {
+    if (!this.userService.isUserAdmin()) {
+      return false;
+    }
+    return true;
+  }
 }

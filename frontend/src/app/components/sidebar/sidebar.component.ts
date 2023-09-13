@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { CategoryDTO } from 'src/app/models/category-dto';
 import { ProductDTO } from 'src/app/models/product-dto';
-import { CategoryService } from 'src/app/services/category.service';
-import { ProductService } from 'src/app/services/product.service';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -15,6 +16,7 @@ export class SidebarComponent {
 
   constructor(private router: Router,
     private categoryService: CategoryService,
+    private userService: UserService,
     private productService: ProductService) {}
 
   sideBarItems!: MenuItem[];
@@ -45,17 +47,16 @@ export class SidebarComponent {
         command: () => {
           this.loadAllProducts.emit();
           this.router.navigate(['products']);
-        }},  
-      
-        { label: 'Categories',
-          icon: 'pi pi-users', 
-          command: () => {
-            this.router.navigate(['categories'])
         }}
     ];
+
+    if (this.isUserAdmin()) {
+      this.sideBarItems.push(
+        { label: 'Categories',  icon: 'pi pi-users', command: () => {
+          this.router.navigate(['categories'])}
+        });
+    }
     this.findAllCategories();
-    
-    
   }
 
   onSideBarClicked() {
@@ -87,6 +88,13 @@ export class SidebarComponent {
         console.log(err);
       }
     });
+  }
+
+  isUserAdmin() {
+    if (!this.userService.isUserAdmin()) {
+      return false;
+    }
+    return true;
   }
 
 }

@@ -83,7 +83,7 @@
           <app-header></app-header>  
         </div>
         <div class="main-container p-3">
-            <button 
+            <button *ngIf="isUserAdmin()"
                 pButton 
                 icon="pi pi-plus" 
                 label="Create New Product" 
@@ -112,6 +112,7 @@
                             <ng-template pTemplate="footer"  >
                                 <div style="padding: 0; margin: 0;">
                                     <button style="margin: 3px !important;"
+                                        (click)="onAddToCart()"
                                         pButton 
                                         label="Add to cart" 
                                         class="p-button-success p-button-outlined p-button-rounded mb-4">
@@ -119,13 +120,14 @@
                                 </div>
                                 
                                 <div style="padding: 0; margin: 0;">
-                                    <button
+                                    
+                                    <button  *ngIf="isUserAdmin()"
                                         pButton 
                                         label="Update" 
                                         class="p-button-secondary p-button-outlined p-button-rounded">
                                     </button>
                         
-                                    <button
+                                    <button *ngIf="isUserAdmin()"
                                         (click)="onDeleteProduct(product)"
                                         pButton 
                                         label="Delete" 

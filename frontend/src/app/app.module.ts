@@ -28,6 +28,9 @@ import { LoginComponent } from './components/login/login.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CategoriesComponent } from './components/categories/categories.component';
+import { AdminsComponent } from './components/admins/admins.component';
+import { HttpInterceptorService } from './services/interceptor/http.interceptor.service';
+import { ForbidenComponent } from './components/forbiden/forbiden.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { CategoriesComponent } from './components/categories/categories.componen
     LoginComponent,
     SidebarComponent,
     RegisterComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    AdminsComponent,
+    ForbidenComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,11 @@ import { CategoriesComponent } from './components/categories/categories.componen
     ListboxModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    },
     MessageService,
     ConfirmationService
   ],

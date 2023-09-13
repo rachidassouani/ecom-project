@@ -19,7 +19,7 @@
     <div class="field">
         <label for="email">Email</label>
         <input
-            
+            [(ngModel)]="authenticationRequest.email"
             id="email"
             pInputText
             placeholder="Your email address"
@@ -30,7 +30,7 @@
     <div class="field">
         <label for="password">Password</label>
         <input
-          
+            [(ngModel)]="authenticationRequest.password"
             id="password"
             pInputText
             placeholder="Password"

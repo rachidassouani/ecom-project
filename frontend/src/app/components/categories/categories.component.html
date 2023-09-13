@@ -54,7 +54,7 @@
           <app-header></app-header>  
         </div>
         <div class="main-container p-3">
-            <button 
+            <button *ngIf="isUserAdmin()"
                 pButton 
                 icon="pi pi-plus" 
                 label="Create New Category" 
@@ -67,7 +67,7 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Operations</th>
+                            <th *ngIf="isUserAdmin()">Operations</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-category>
@@ -75,7 +75,7 @@
                             <td>{{ category.id }}</td>
                             <td>{{ category.name }}</td>
                             <td>{{ category.description }}</td>
-                            <td (click)="onDeleteCategory(category)"><i class="pi pi-times" style="font-size: 1.5rem; color: red; cursor: pointer;"></i></td>
+                            <td *ngIf="isUserAdmin()" (click)="onDeleteCategory(category)"><i class="pi pi-times" style="font-size: 1.5rem; color: red; cursor: pointer;"></i></td>
                         </tr>
                     </ng-template>
                 </p-table>

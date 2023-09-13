@@ -1,10 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { AuthenticationResponse } from 'src/app/models/AuthenticationResponse';
 import { CategoryDTO } from 'src/app/models/category-dto';
 import { ProductDTO } from 'src/app/models/product-dto';
 import { ProductRequest } from 'src/app/models/product-request';
-import { CategoryService } from 'src/app/services/category.service';
-import { ProductService } from 'src/app/services/product.service';
+import { CategoryService } from 'src/app/services/category/category.service';
+import { ProductService } from 'src/app/services/product/product.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-products',
@@ -25,6 +28,8 @@ export class ProductsComponent {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private productService: ProductService,
+    private router: Router,
+    private userService: UserService,
     private categoryService: CategoryService) {}
 
   ngOnInit() {    
@@ -146,5 +151,25 @@ export class ProductsComponent {
 
   handleLoadAllProducts() {
     this.findAllProducts();
+  }
+
+  onAddToCart() {
+    if (!this.isUserLogged()) {
+      this.router.navigate(['login'])
+    }
+  }
+
+  private isUserLogged() {
+    if (!this.userService.isUserLogged()) {
+      return false;
+    }
+    return true;
+  }
+
+  isUserAdmin() {
+    if (!this.userService.isUserAdmin()) {
+      return false;
+    }
+    return true;
   }
 }

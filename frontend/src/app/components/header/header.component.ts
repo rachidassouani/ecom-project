@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { AuthenticationResponse } from 'src/app/models/AuthenticationResponse';
 
 @Component({
   selector: 'app-header',
@@ -31,10 +32,24 @@ export class HeaderComponent {
   }
 
   getUsername(): string {
-    return 'raachidassouani';
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const authResponse: AuthenticationResponse = JSON.parse(storedUser);
+      if (authResponse && authResponse.userDTO && authResponse.userDTO.email) {
+        return authResponse.userDTO.email;
+      }
+    }
+    return 'No User Logged in';
   }
 
-  getUserRole(): string {
-    return 'ADMIN';
+  getUserRole(): string | string[] {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const authResponse: AuthenticationResponse = JSON.parse(storedUser);
+      if (authResponse && authResponse.userDTO && authResponse.userDTO.roles) {
+        return authResponse.userDTO.roles;
+      }
+    }
+    return ' ';
   }
 }
