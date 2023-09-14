@@ -1,5 +1,7 @@
 package ma.enset.pfe_ecommerce.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import ma.enset.pfe_ecommerce.dtos.ProductDTO;
 import ma.enset.pfe_ecommerce.dtos.ProductRequest;
@@ -13,6 +15,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ import java.util.List;
 public class ProductRestController {
     private ProductService productService;
     private ProductRepository productRepository;
+    private ObjectMapper mapper;
+
 
     @GetMapping
     public List<ProductDTO> findAllProducts(){
@@ -40,8 +45,12 @@ public class ProductRestController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveProduct(@RequestBody ProductRequest productRequest) throws CategoryNotFoundException {
-        ProductResponse savedProduct = productService.saveProduct(productRequest);
+    public ResponseEntity<?> saveProduct(
+            @RequestParam("productRequest") String model,
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) throws CategoryNotFoundException, JsonProcessingException {
+        ProductRequest productRequest = mapper.readValue(model, ProductRequest.class);
+        ProductResponse savedProduct = productService.saveProduct(productRequest, image);
         return ResponseEntity.ok(savedProduct);
     }
 

@@ -9,6 +9,5 @@ public class ProductDTO {
     private String description;
     private double price;
     private boolean isAvailable;
-    private String photo;
     private CategoryResponse categoryDTO;
 }
