@@ -25,9 +25,9 @@ public class PfeEcommerceApplication {
                                         CategoryRepository categoryRepository) {
         return args -> {
 
-            //categoryRepository.save(new Category(null,"Laptops","Laptops"));
-            //categoryRepository.save(new Category(null,"Phones","Phones"));
-            //categoryRepository.save(new Category(null,"Watches","Watches"));
+            categoryRepository.save(new Category(null,"Laptops","Laptops"));
+            categoryRepository.save(new Category(null,"Phones","Phones"));
+            categoryRepository.save(new Category(null,"Watches","Watches"));
 
 
             Random rd = new Random();

@@ -46,7 +46,7 @@ public class ProductMapperImp {
         product.setName(productRequest.getName());
         product.setDescription(productRequest.getDescription());
         product.setPrice(productRequest.getPrice());
-        product.setAvailable(productRequest.isAvailable());
+        product.setAvailable(productRequest.getIsAvailable());
         System.out.println("done from product request mapper");
         return product;
     }

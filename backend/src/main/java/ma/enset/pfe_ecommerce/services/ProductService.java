@@ -6,6 +6,7 @@ import ma.enset.pfe_ecommerce.dtos.ProductResponse;
 import ma.enset.pfe_ecommerce.exceptions.CategoryNotFoundException;
 import ma.enset.pfe_ecommerce.exceptions.ProductNotFoundException;
 import ma.enset.pfe_ecommerce.model.Product;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface ProductService {
    ProductDTO findProductById(Long id) throws ProductNotFoundException;
    List<ProductDTO> findAllProducts();
-   ProductResponse saveProduct(ProductRequest productRequest) throws CategoryNotFoundException;
+   ProductResponse saveProduct(ProductRequest productRequest,  MultipartFile image) throws CategoryNotFoundException;
    ProductDTO updateProduct(ProductDTO productDTO);
    void deleteProduct(Long id);
    byte[] getPhoto(Long id) throws Exception;

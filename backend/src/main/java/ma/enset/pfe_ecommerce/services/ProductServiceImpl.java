@@ -11,6 +11,7 @@ import ma.enset.pfe_ecommerce.mappers.ProductMapperImp;
 import ma.enset.pfe_ecommerce.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.nio.file.Files;
@@ -21,14 +22,15 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
-    private ProductRepository productRepository;
-    private CategoryService categoryService;
+    private final ProductRepository productRepository;
+    private final CategoryService categoryService;
+    private final StorageService storageService;
     private final ProductMapperImp productMapperImp;
 
-
-    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, ProductMapperImp productMapperImp) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryService categoryService, StorageService storageService, ProductMapperImp productMapperImp) {
         this.productRepository = productRepository;
         this.categoryService = categoryService;
+        this.storageService = storageService;
         this.productMapperImp = productMapperImp;
     }
 
@@ -49,14 +51,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductResponse saveProduct(ProductRequest productRequest) throws CategoryNotFoundException {
+    public ProductResponse saveProduct(ProductRequest productRequest, MultipartFile image) throws CategoryNotFoundException {
         Product productToSave = productMapperImp.fromProductRequest(productRequest);
         Category category = categoryService.findCategoryById(productRequest.getCategoryId());
         if (category != null) {
             productToSave.setCategory(category);
         }
         Product savedProduct = productRepository.save(productToSave);
-
+        uploadImage(productToSave, image);
         return productMapperImp.fromProductToProductResponse(savedProduct);
     }
 
@@ -105,5 +107,12 @@ public class ProductServiceImpl implements ProductService {
         return productsByCategoryId.stream()
                 .map(product -> productMapperImp.fromProduct(product))
                 .collect(Collectors.toList());
+    }
+
+    public String uploadImage(Product product, MultipartFile multipartFile) {
+        //  ValidateImage.validateImage(multipartFile); todo
+        final String uploadedFile = storageService.uploadFile(multipartFile);
+        product.setPhoto(uploadedFile);
+        return uploadedFile;
     }
 }
