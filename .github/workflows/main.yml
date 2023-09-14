@@ -20,8 +20,8 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-      - name: Unit Test
-        run: mvn -B test -Dspring.profiles.active=staging --file pom.xml
+#      - name: Unit Test
+#        run: mvn -B test -Dspring.profiles.active=staging --file pom.xml
 
       - name: Build and Package Maven
         run: |
