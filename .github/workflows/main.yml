@@ -1,0 +1,43 @@
+name: Build & Deploy App
+
+on:
+  push:
+    branches:
+      - master
+
+
+jobs:
+  build:
+    name: build app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Checkout Repository
+
+      - name: setup jdk
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
+
+      - name: Unit Test
+        run: mvn -B test -Dspring.profiles.active=staging --file pom.xml
+
+      - name: Build and Package Maven
+        run: |
+         mvn -B package -Dspring.profiles.active=staging --file pom.xml
+#         aws s3 cp target/*.jar s3://${{ secrets.AWS_S3_BUCKET }}/
+
+      - name: upload
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_NAME }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "target/*.jar"
+          target: /home/ec2-user/artifact-spring
+      - name: Start Spring boot app on the remote server
+        run: |
+           echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
+           ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}} '/home/ec2-user/restart.sh'
