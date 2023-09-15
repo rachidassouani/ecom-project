@@ -17,7 +17,7 @@ jobs:
       - name: setup jdk
         uses: actions/setup-java@v3
         with:
-          distribution: 'corretto'
+          distribution: 'temurin'
           java-version: 17
 
 #      - name: Unit Test
@@ -36,8 +36,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "target/*.jar"
-          target: /home/ec2-user/artifact-spring
+          target: /home/ubuntu/artifact-spring
       - name: Start Spring boot app on the remote server
         run: |
            echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key && chmod 600 private_key
-           ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}} '/home/ec2-user/restart.sh'
+           ssh -o StrictHostKeyChecking=no -i private_key ${{secrets.SSH_USER_NAME}}@${{secrets.SSH_HOST}} '/home/ubuntu/restart.sh'
