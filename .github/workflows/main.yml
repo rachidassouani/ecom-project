@@ -25,7 +25,7 @@ jobs:
 
       - name: Build and Package Maven
         run: |
-         mvn -B -Dmaven.test.skip=true package -Dspring.profiles.active=staging --file pom.xml
+         mvn -B -Dmaven.test.skip=true package --file pom.xml
 #         aws s3 cp target/*.jar s3://${{ secrets.AWS_S3_BUCKET }}/
 
       - name: upload

@@ -1,25 +1,26 @@
 spring:
-    profiles:
-        active: '@active.profile@'
-    datasource:
-        username: ${db_username}
-        password: ${db_password}
-        url: jdbc:mysql://${db_ip}:${db_port:3306}/ensetpfe
-    jpa:
-        hibernate:
-            ddl-auto: validate
-        properties:
-            hibernate:
-                dialect: org.hibernate.dialect.MySQL8Dialect
+  profiles:
+    active: '@active.profile@'
+  datasource:
+    username: ${db_username}
+    password: ${db_password}
+    url: jdbc:mysql://${db_ip}:${db_port:3306}/ensetpfe
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
 app:
-    config:
-        aws:
-            access-key: ${cloud_aws_credentials_access_key}
-            region: eu-west-3
-            secret-key: ${cloud_aws_credentials_secret_key}
+  config:
+    aws:
+      access-key: ${cloud_aws_credentials_access_key}
+      secret-key: ${cloud_aws_credentials_secret_key}
+      region: eu-west-3
+
 cors:
-    allowed-headers: '*'
-    allowed-methods: '*'
-    allowed-origins: '*'
-    exposed-headers: '*'
+  allowed-headers: '*'
+  allowed-methods: '*'
+  allowed-origins: '*'
+  exposed-headers: '*'
