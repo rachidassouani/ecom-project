@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f201b5be-fcd3-4fab-833f-d7d7a1515150" name="Changes" comment="disable cors">
+    <list default="true" id="f201b5be-fcd3-4fab-833f-d7d7a1515150" name="Changes" comment="Just to test ci cd">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/main.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ma/enset/pfe_ecommerce/web/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/enset/pfe_ecommerce/web/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ma/enset/pfe_ecommerce/web/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/enset/pfe_ecommerce/web/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ma/enset/pfe_ecommerce/dtos/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ma/enset/pfe_ecommerce/dtos/ProductDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,10 +20,14 @@
         <entry key="$PROJECT_DIR$" value="95bccef5a73edb8a7e45e404a32ae36c316541fc" />
       </map>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
   <component name="ProjectId" id="2UwePGsY6PVnRPRCoRLTwxWHZju" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -37,9 +41,14 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "last_opened_file_path": "/home/rachid/IdeaProjects/ecom-project",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "spring.configuration.checksum": "d1ddb192eeecf50ae5dbc0230fbd67f3",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -91,14 +100,41 @@
       <option name="project" value="LOCAL" />
       <updated>1694799170919</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="disable cors">
+      <option name="closed" value="true" />
+      <created>1694810011200</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1694810011200</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Just to test ci cd">
+      <option name="closed" value="true" />
+      <created>1694815413959</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694815413959</updated>
+    </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f201b5be-fcd3-4fab-833f-d7d7a1515150" name="Changes" comment="Just to test ci cd" />
+      <created>1694865822521</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1694865822521</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactor" />
     <MESSAGE value="refactor ci cd" />
     <MESSAGE value="upgrade spring boot" />
     <MESSAGE value="disable cors" />
-    <option name="LAST_COMMIT_MESSAGE" value="disable cors" />
+    <MESSAGE value="Just to test ci cd" />
+    <option name="LAST_COMMIT_MESSAGE" value="Just to test ci cd" />
   </component>
 </project>
